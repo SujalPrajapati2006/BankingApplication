@@ -1,55 +1,57 @@
 package com.example.BankingApplication.service;
 
-
-import com.example.BankingApplication.Entity.Account;
-import com.example.BankingApplication.JpaRepository.AccountRepository;
+import com.example.PRECTICE.Entity.Account;
+import com.example.PRECTICE.Repository.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AccountService {
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountRepo accountRepo;
 
-    public Account createAccount(Account account){
-         return accountRepository.save(account);
+    public Account createAccount(Account account) {
+        return accountRepo.save(account);
     }
 
-    public Optional<Account> getAccount(Long id){
-        return accountRepository.findById(id);
+    public List<Account> getAccount() {
+        return accountRepo.findAll();
     }
 
-    public Account deposit(Long id,double amount){
-         Account account = getAccount(id).orElseThrow(() -> new RuntimeException("Account Not Found"));
-         account.setBalance(account.getBalance() + amount);
-         return accountRepository.save(account);
+    public Optional<Account> getAccountById(Long id) {
+        return accountRepo.findById(id);
+    }
+
+    public Account deposit(Long id, double amount) {
+        Account account = getAccountById(id).orElseThrow(() -> new RuntimeException("Account not found"));
+        account.setBalance(account.getBalance() + amount);
+        return accountRepo.save(account);
     }
 
     public Account withdraw(Long id, double amount) {
-        Account account = getAccount(id).orElseThrow(() -> new RuntimeException("Account not found"));
+        Account account = getAccountById(id).orElseThrow(() -> new RuntimeException("Account not found"));
         if (account.getBalance() < amount) {
-            throw new RuntimeException("Insufficient funds");
+            throw new RuntimeException("Insufficient Balance");
         }
         account.setBalance(account.getBalance() - amount);
-        return accountRepository.save(account);
+        return accountRepo.save(account);
     }
 
-    public void deleteAccount(Long id){
-         if(!accountRepository.existsById(id)){
-             throw new RuntimeException("Account Not Found");
+    public void delete(Long id){
+         if(!accountRepo.existsById(id)){
+              throw new RuntimeException("Account not found");
          }
-         accountRepository.deleteById(id);
+         accountRepo.deleteById(id);
     }
 
     public Account updateAccount(Long id,Account updateAccount){
-          Account existingAccount = getAccount(id).orElseThrow(() -> new RuntimeException("Account Not Found"));
-          existingAccount.setAccountHolderName(updateAccount.getAccountHolderName());
-          existingAccount.setBalance(updateAccount.getBalance());
-          return  accountRepository.save(existingAccount);
+         Account existingAccount = getAccountById(id).orElseThrow(() -> new RuntimeException("Account not found"));
+         existingAccount.setAccountHolderName(updateAccount.getAccountHolderName());
+         existingAccount.setBalance(updateAccount.getBalance());
+         return accountRepo.save(existingAccount);
     }
-
-
 }
