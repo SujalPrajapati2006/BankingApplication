@@ -1,7 +1,7 @@
 package com.example.BankingApplication.service;
 
-import com.example.PRECTICE.Entity.Account;
-import com.example.PRECTICE.Repository.AccountRepo;
+import com.example.BankingApplication.Entity.Account;
+import com.example.BankingApplication.Repository.AccountRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
