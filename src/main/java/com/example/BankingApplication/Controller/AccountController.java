@@ -1,7 +1,7 @@
 package com.example.BankingApplication.Controller;
 
-import com.example.PRECTICE.Entity.Account;
-import com.example.PRECTICE.Service.AccountService;
+import com.example.BankingApplication.Entity.Account;
+import com.example.BankingApplication.Service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
