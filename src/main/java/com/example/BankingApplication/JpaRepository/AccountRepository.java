@@ -1,6 +1,6 @@
 package com.example.BankingApplication.JpaRepository;
 
-import com.example.PRECTICE.Entity.Account;
+import com.example.BankingApplication.Entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
